@@ -10,14 +10,12 @@ router.get('/',async (req,res)=>{
 })
 
 router.get('/new',(req,res)=>{
-  
     res.render('members/new',{member : new Member()})
 })
 
 router.post('/',async (req,res)=>{
     const member = new Member({
-        firstName : req.body.firstName,
-        lastName : req.body.lastName,
+        name : req.body.name,
         email : req.body.email,
         mobilePhone : req.body.mobilePhone,
         workPhone : req.body.workPhone,
@@ -45,8 +43,7 @@ router.put('/:id',async (req,res)=>{
     let member
     try {
         member = await Member.findById(req.params.id)
-        member.firstName = req.body.firstName,
-        member.lastName = req.body.lastName,
+        member.name = req.body.name,
         member.email = req.body.email,
         member.mobilePhone = req.body.mobilePhone,
         member.workPhone = req.body.workPhone,

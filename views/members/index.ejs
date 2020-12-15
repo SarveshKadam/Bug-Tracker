@@ -1,23 +1,23 @@
-<h2>Section title</h2>
+<h2>Members</h2>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
             <tr>
               <th>Number</th>
-              <th>FirstName</th>
-              <th>LastName</th>
+              <th>Name</th>
               <th>Email</th>
               <th>Position</th>
+              <th>Location</th>
             </tr>
           </thead>
           <tbody>
             <% members.forEach( member =>{ %> 
             <tr>
               <td><a href="/members/<%= member.id %>"><%= member.memberID %></a></td>
-              <td><%= member.firstName %></td>
-              <td><%= member.lastName %></td>
+              <td><%= member.name %></td>
               <td><%= member.email %></td>
               <td><%= member.position %></td>
+              <td><%= member.location %></td>
             </tr>
             <% }) %> 
           </tbody>

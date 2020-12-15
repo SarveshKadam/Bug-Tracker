@@ -1,11 +1,7 @@
 const mongoose = require('mongoose')
 const autoIncrement = require('mongoose-sequence')(mongoose)
 const memberSchema = new mongoose.Schema({
-    firstName : {
-        type : String,
-        required : true
-    },
-    lastName : {
+    name : {
         type : String,
         required : true
     },

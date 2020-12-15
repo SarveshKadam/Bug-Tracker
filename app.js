@@ -3,6 +3,7 @@ const landingRouter = require('./routers/landing')
 const loginRouter = require('./routers/login')
 const dashboardRouter = require('./routers/dashboard')
 const memberRouter = require('./routers/member')
+const defectRouter = require('./routers/defect')
 const expressLayouts = require('express-ejs-layouts')
 const express = require('express')
 const helmet = require('helmet')
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({limit:'10mb',extended:false}))
 app.use(methodOverride('_method'))
 
 const mongoose = require('mongoose')
+const router = require('./routers/member')
 mongoose.connect(process.env.DATABASE ,{useUnifiedTopology : true , useNewUrlParser : true})
 
 const db = mongoose.connection
@@ -40,7 +42,7 @@ routerCheck('/',landingRouter)
 routerCheck('/login',loginRouter)
 routerCheck('/dashboard',dashboardRouter)
 routerCheck('/members',memberRouter)
-
+routerCheck('/defects',defectRouter)
 
 
 app.listen(process.env.PORT || 3000)
