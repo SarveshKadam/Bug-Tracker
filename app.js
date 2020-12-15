@@ -2,15 +2,21 @@
 const landingRouter = require('./routers/landing')
 const loginRouter = require('./routers/login')
 const dashboardRouter = require('./routers/dashboard')
+const memberRouter = require('./routers/member')
 const expressLayouts = require('express-ejs-layouts')
 const express = require('express')
 const helmet = require('helmet')
+const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
+
 const app = express()
 app.set('view engine','ejs')
 app.set('views',__dirname + '/views')
 app.use(express.static('public'))
 require('dotenv').config({path: './config.env'})
 app.use(helmet())
+app.use(bodyParser.urlencoded({limit:'10mb',extended:false}))
+app.use(methodOverride('_method'))
 
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE ,{useUnifiedTopology : true , useNewUrlParser : true})
@@ -33,7 +39,7 @@ function routerCheck(routePath,routerimp){
 routerCheck('/',landingRouter)
 routerCheck('/login',loginRouter)
 routerCheck('/dashboard',dashboardRouter)
-
+routerCheck('/members',memberRouter)
 
 
 
