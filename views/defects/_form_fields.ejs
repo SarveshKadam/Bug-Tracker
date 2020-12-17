@@ -44,10 +44,15 @@
             </div>
 
             <div class="col-sm-6">
-              <label for="reportedBy" class="form-label">Reported By</label>
-              <select id="reportedBy" class="form-control" name="reportedBy" required>
-                <option selected>--none--</option>
-                <option>Mike</option>
+              <label for="member" class="form-label">Assigned To</label>
+              <select id="member" class="form-control" name="member" required>
+                  <% members.forEach( member => { %> 
+                    <% if(member.id === defect.member) { %> 
+                <option selected label="<%= member.name %>" value="<%= member.id %>">
+                    <% } else { %> 
+                <option label="<%= member.name %>" value="<%= member.id %>">
+                    <% } %> 
+                <% }) %> 
             </select>
               <div class="invalid-feedback">
                 Valid reported member name is required.
@@ -57,10 +62,14 @@
             <div class="col-sm-6">
                 <label for="priority" class="form-label">Priority</label>
                 <select id="priority" class="form-control" name="priority" required>
-                    <option value="<%= defect.priority %>">1</option>
-                    <option value="<%= defect.priority %>" selected>2</option>
-                    <option value="<%= defect.priority %>">3</option>
-                    <option value="<%= defect.priority %>">4</option>
+                <% const priorityOptions = ['1','2','3','4'] %> 
+                <% priorityOptions.forEach(priorityOption =>{ %> 
+                    <% if(defect.priority == priorityOption) { %> 
+                  <option selected label="<%= defect.priority %>" value="<%= priorityOption %>" >
+                  <% } else { %> 
+                    <option value="<%= priorityOption %>"><%= priorityOption %> </option>
+                    <% } %> 
+                <% }) %> 
                 </select>
                 <div class="invalid-feedback">
                   Valid reported member name is required.
@@ -68,11 +77,9 @@
               </div>
 
             <div class="col-sm-6">
-              <label for="assignedTo" class="form-label">Assigned to</label>
-              <select id="assignedTo" class="form-control" name="assignedTo" required>
-                <option selected>--none--</option>
-                <option>Mike</option>
-            </select>
+                <label for="createdOn" class="form-label">Created On</label>
+                <input type="date" name="createdOn" class="form-control"
+                    value="<%= defect.createdOn == null ? '' : defect.createdOn.toISOString().split('T')[0] %>" disabled>
               <div class="invalid-feedback">
                 Please enter the person to whon the defect should be assigned to.
               </div>
@@ -81,16 +88,20 @@
             <div class="col-sm-6">
               <label for="state" class="form-label">State</label>
               <select id="state" class="form-control" name="state" required>
-                <option value="<%= defect.state %>" selected>Assigned</option>
-                <option value="<%= defect.state %>">Work in progress</option>
-                <option value="<%= defect.state %>">Resolved</option>
-                <option value="<%= defect.state %>">Canceled</option>
+                <% const stateOptions = ["Assigned","Work in progress","Resolved","Canceled"] %> 
+                <% stateOptions.forEach(stateOption =>{ %> 
+                    <% if(defect.state == stateOption) { %> 
+                  <option selected label="<%= defect.state %>" value="<%= stateOption %>" >
+                  <% } else { %> 
+                    <option value="<%= stateOption %>"><%= stateOption %></option>
+                    <% } %> 
+                  <% }) %> 
             </select>
             </div>
 
             <div class="col-sm-6">
               <label for="points" class="form-label">Points<span class="text-muted">(Optional)</span></label>
-              <input type="number" class="form-control" id="address"  name="points" value="<%= defect.points %>" >
+              <input type="number" class="form-control" id="address"  name="points" value="<%= defect.points %>" min="1" max="8">
               <div class="invalid-feedback">
                 Please enter your position.
               </div>
@@ -98,10 +109,14 @@
             <div class="col-sm-6">
               <label for="environment" class="form-label">Environment</label>
               <select id="environment" class="form-control" name="environment" required>
-                <option value="<%= defect.environment %>" selected>Dev</option>
-                <option value="<%= defect.environment %>">QA</option>
-                <option value="<%= defect.environment %>">UAT</option>
-                <option value="<%= defect.environment %>">Prod</option>
+                  <% const envOptions = ["Dev","QA","UAT","Prod"] %> 
+                  <% envOptions.forEach(envOption =>{ %> 
+                    <% if(defect.environment == envOption) { %> 
+                    <option selected label="<%= defect.environment %>" value="<%= envOption %>" >
+                        <% } else { %> 
+                    <option value="<%= envOption %>"><%= envOption %></option>
+                            <% } %>   
+                    <% }) %> 
                 </select>
               <div class="invalid-feedback">
                 Please enter your environment.
@@ -130,7 +145,7 @@
         <hr class="my-4">
         <div>
             <button class="btn btn-primary btn-lg mt-3" type="submit">Save</button>
-            <a href="/members" class="btn btn-primary btn-lg mt-3">Cancel</a>
+            <a href="/defects" class="btn btn-primary btn-lg mt-3">Cancel</a>
             <a href="#" class="btn btn-primary btn-lg mt-3">Delete</a>
         </div>
       </div>

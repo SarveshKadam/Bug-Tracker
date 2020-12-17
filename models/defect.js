@@ -5,30 +5,32 @@ const defectSchema = new mongoose.Schema({
     number :{
         type : Number
     },
-    reportedBy :{
+    member :{
         type: mongoose.Schema.Types.ObjectId,
         ref : 'Member',
         required: true
     },
     priority:{
-        type : Number,
-        required: true
+        type : Object,
+        required: true,
+        enum :['1','2','3','4']
     },
-    assignedTo :{
-        type: mongoose.Schema.Types.ObjectId,
-        ref : 'Member',
-        required: true
+    createdOn:{
+        type: Date,
+        default : Date.now
     },
     state :{
-        type : String,
-        required : true
+        type : Object,
+        required : true,
+        enum : ["Assigned","Work in progress","Resolved","Canceled"]
     },
     points:{
         type : String
     },
     environment :{
-        type : String,
-        required:true
+        type :Object,
+        required:true,
+        enum : ['Dev','QA','UAT','Prod']
     },
     product:{
         type:String
@@ -38,10 +40,6 @@ const defectSchema = new mongoose.Schema({
     },
     description:{
         type:String
-    },
-    member :{
-        type: mongoose.Schema.Types.ObjectId,
-        ref : 'Member'
     }
 })
 
