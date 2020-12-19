@@ -40,55 +40,39 @@
           <div class="row g-3">
             <div class="col-12">
               <label for="name" class="form-label">Name</label>
-              <input type="text" class="form-control" id="name" name="name" value="<%= member.name %>" required>
-              <div class="invalid-feedback">
-                Valid first name is required.
-              </div>
+              <input disabled type="text" class="form-control" id="name" name="name" value="<%= member.name %>">
             </div>
 
             <div class="col-12">
               <label for="email" class="form-label">Email </label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com" name="email" value="<%= member.email %>" required>
-              <div class="invalid-feedback">
-                Please enter a valid email address for shipping updates.
-              </div>
+              <input disabled type="email" class="form-control" id="email" placeholder="you@example.com" name="email" value="<%= member.email %>">
             </div>
 
             <div class="col-sm-6">
               <label for="mobilePhone" class="form-label">Mobile Phone <span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address" placeholder="999988499" name="mobilePhone" value="<%= member.mobilePhone %>">
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
+              <input disabled type="text" class="form-control" id="address" placeholder="999988499" name="mobilePhone" value="<%= member.mobilePhone %>">
             </div>
             <div class="col-sm-6">
               <label for="workPhone" class="form-label">Work Phone <span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address" placeholder="022-1254-5213" name="workPhone" value="<%= member.workPhone %>">
-              <div class="invalid-feedback">
-                Please enter your shipping address.
-              </div>
+              <input disabled type="text" class="form-control" id="address" placeholder="022-1254-5213" name="workPhone" value="<%= member.workPhone %>">
             </div>
 
             <div class="col-sm-6">
               <label for="position" class="form-label">Position</label>
-              <input type="text" class="form-control" id="address" placeholder="Software Engineer" name="position" value="<%= member.position %>" required>
-              <div class="invalid-feedback">
-                Please enter your position.
-              </div>
+              <input disabled type="text" class="form-control" id="address" placeholder="Software Engineer" name="position" value="<%= member.position %>">
             </div>
             <div class="col-sm-6">
               <label for="location" class="form-label">Location</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" name="location" value="<%= member.location %>" required>
-              <div class="invalid-feedback">
-                Please enter your Location.
-              </div>
+              <input disabled type="text" class="form-control" id="address" placeholder="1234 Main St" name="location" value="<%= member.location %>">
             </div>
             
           </div>
         <hr class="my-4">
         <div>
-            <button class="btn btn-primary btn-lg mt-3" type="submit">Save</button>
-            <a href="/members" class="btn btn-primary btn-lg mt-3">Cancel</a>
+           <span><a href="/members/<%= member.id %>/edit" class="btn btn-primary btn-lg mt-3">Edit</a></span> 
+           <span><form method="POST" action="/members/<%= member.id %>?_method=DELETE">
+                <button class="btn btn-primary btn-lg mt-3" type="submit">Delete</button>
+            </form> </span> 
         </div>
       </div>
     </div>

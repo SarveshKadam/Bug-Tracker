@@ -3,12 +3,23 @@ const express = require('express')
 const router = express.Router()
 const Defect = require('../models/defect')
 const Member = require('../models/member')
+const bodyParser = require('body-parser')
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
 
 router.get('/',async (req,res)=>{
+    let query = Defect.find({}).populate('member')
+    if(req.query.number){
+        query = query.regex('number',req.query.number)
+    }
     try {
-        const defects = await Defect.find({}).populate('member').exec()
-        res.render('defects',{defects})
+        const defects = await query.exec()
+        res.render('defects/index',{
+            defects,
+            searchOptions : req.query
+        })
     } catch (error) {
+        console.log(error);
         res.redirect('/')
     }
     
@@ -28,7 +39,7 @@ router.get('/new',async(req,res)=>{
     }
 })
 
-router.post('/',async (req,res)=>{
+router.post('/',urlencodedParser,async (req,res)=>{
     const defect = new Defect({
         member : req.body.member,
         priority : req.body.priority,
@@ -41,19 +52,27 @@ router.post('/',async (req,res)=>{
         description: req.body.description
     })
     try {
-        console.log(req.body);
         const newDefect = await defect.save()
         res.redirect('/defects')
-    } catch(e) {
-        console.log(e);
+    } catch {
         res.redirect('/')
     }
 })
 
-router.get('/:id',async (req,res)=>{
+router.get('/:id',urlencodedParser,async (req,res)=>{
     try {
         const members = await Member.find({})
-        const defect = await Defect.findById(req.params.id)
+        const defect = await Defect.findById(req.params.id).populate('member').exec()
+        res.render('defects/show',{defect, members})
+    } catch {
+        res.redirect('/defects')
+    }
+})
+
+router.get('/:id/edit',urlencodedParser,async (req,res)=>{
+    try {
+        const members = await Member.find({})
+        const defect = await Defect.findById(req.params.id).populate('member').exec()
         res.render('defects/edit',{defect, members})
     } catch {
         res.redirect('/defects')
@@ -75,9 +94,29 @@ router.put('/:id',async (req,res)=>{
         defect.description= req.body.description
         await defect.save()
         res.redirect(`/defects/${defect.id}`)
-    } catch(e) {
-        console.log(e);
+    } catch {
         res.redirect('/')
+    }
+})
+
+router.delete('/:id',urlencodedParser,async (req,res)=>{
+    let defect
+    try {
+        defect = await Defect.findById(req.params.id)
+        console.log("Defect is THE ==== "+defect)
+        await defect.remove()
+        res.redirect('/defects')
+    } catch(e) {
+        console.log("Error of DELETE ////|||||\\\\",e);
+        if(defect){
+            res.render('defects/edit',{
+                defect,
+                errorMessage :"Could not remove book"
+            })
+        }else{
+            console.log("------------REDIRECTED------")
+            res.redirect('/')
+        }
     }
 })
 

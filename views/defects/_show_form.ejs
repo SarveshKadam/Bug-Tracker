@@ -45,23 +45,12 @@
 
             <div class="col-sm-6">
               <label for="member" class="form-label">Assigned To</label>
-              <select id="member" class="form-control" name="member">
-                  <% members.forEach( member => { %> 
-                    <% if(member.id === defect.member) { %> 
-                        <option selected label="<%= member.name %>" value="<%= member.id %>">
-                    <% } else { %> 
-                        <option label="<%= member.name %>" value="<%= member.id %>">
-                    <% } %> 
-                <% }) %> 
-            </select>
-              <div class="invalid-feedback">
-                Valid reported member name is required.
-              </div>
+              <input type="text"  class="form-control" name="member" value="<%= defect.member.name %>" disabled>
             </div>
 
             <div class="col-sm-6">
                 <label for="priority" class="form-label">Priority</label>
-                <select id="priority" class="form-control" name="priority" required>
+                <select disabled id="priority" class="form-control" name="priority">
                 <% const priorityOptions = ['1','2','3','4'] %> 
                 <% priorityOptions.forEach(priorityOption =>{ %> 
                     <% if(defect.priority == priorityOption) { %> 
@@ -71,9 +60,6 @@
                     <% } %> 
                 <% }) %> 
                 </select>
-                <div class="invalid-feedback">
-                  Valid reported member name is required.
-                </div>
               </div>
 
             <div class="col-sm-6">
@@ -87,7 +73,7 @@
 
             <div class="col-sm-6">
               <label for="state" class="form-label">State</label>
-              <select id="state" class="form-control" name="state" required>
+              <select id="state" class="form-control" name="state" disabled>
                 <% const stateOptions = ["Assigned","Work in progress","Resolved","Canceled"] %> 
                 <% stateOptions.forEach(stateOption =>{ %> 
                     <% if(defect.state == stateOption) { %> 
@@ -101,14 +87,14 @@
 
             <div class="col-sm-6">
               <label for="points" class="form-label">Points<span class="text-muted">(Optional)</span></label>
-              <input type="number" class="form-control" id="address"  name="points" value="<%= defect.points %>" min="1" max="8">
+              <input disabled type="number" class="form-control" id="address"  name="points" value="<%= defect.points %>" min="1" max="8">
               <div class="invalid-feedback">
                 Please enter your position.
               </div>
             </div>
             <div class="col-sm-6">
               <label for="environment" class="form-label">Environment</label>
-              <select id="environment" class="form-control" name="environment" required>
+              <select disabled id="environment" class="form-control" name="environment" >
                   <% const envOptions = ["Dev","QA","UAT","Prod"] %> 
                   <% envOptions.forEach(envOption =>{ %> 
                     <% if(defect.environment == envOption) { %> 
@@ -124,7 +110,7 @@
             </div>
             <div class="col-sm-6">
                 <label for="product" class="form-label">Product</label>
-                <input type="text" class="form-control" name="product" value="<%= defect.product %>" required>
+                <input disabled type="text" class="form-control" name="product" value="<%= defect.product %>">
                 <div class="invalid-feedback">
                   Please enter your product.
                 </div>
@@ -132,20 +118,22 @@
             
             <div class="col-12">
                 <label for="shortDescription" class="form-label">Short Description </label>
-                <input type="text" class="form-control"  name="shortDescription" value="<%= defect.shortDescription %>" required>
+                <input disabled type="text" class="form-control"  name="shortDescription" value="<%= defect.shortDescription %>">
                 <div class="invalid-feedback">
                   Please enter a valid short description.
             </div>
             
             <div class="col-12">
                 <label for="description" class="form-label">Description </label>
-                <textarea name="description" class="form-control" rows="3"><%= defect.description %></textarea>
+                <textarea disabled name="description" class="form-control" rows="3"><%= defect.description %></textarea>
             </div>
 
         <hr class="my-4">
         <div>
-            <button class="btn btn-primary btn-lg mt-3" type="submit">Save</button>
-            <a href="/defects" class="btn btn-primary btn-lg mt-3">Cancel</a>
+            <a href="/defects/<%= defect.id %>/edit" class="btn btn-primary btn-lg mt-3">Edit</a>
+            <form method="POST" action="/defects/<%= defect.id %>?_method=DELETE">
+                <button class="btn btn-primary btn-lg mt-3" type="submit">Delete</button>
+            </form> 
         </div>
       </div>
     </div>

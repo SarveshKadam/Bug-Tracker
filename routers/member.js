@@ -5,8 +5,20 @@ const Member = require('../models/member')
 
 
 router.get('/',async (req,res)=>{
-    const members = await Member.find({})
-    res.render('members',{members})
+    let searchOptions = {}
+    if(req.query.name != null || req.query.name == ''){
+       searchOptions.name = new RegExp(req.query.name,'i')
+    }
+    try {
+        const members = await Member.find(searchOptions)
+        res.render('members/index',{
+            members,
+            searchOptions : req.query
+        })
+
+    } catch {
+        res.redirect('/')
+    }
 })
 
 router.get('/new',(req,res)=>{
@@ -30,10 +42,27 @@ router.post('/',async (req,res)=>{
     }
 })
 
+//show the page
+
 router.get('/:id',async (req,res)=>{
     try {
         const member = await Member.findById(req.params.id)
-        res.render('members/edit',{member})
+        
+        res.render('members/show',{
+            member
+        })
+    } catch(e){
+        console.log(e);
+        res.redirect('/')
+    }
+   
+})
+
+//Edit the page
+router.get('/:id/edit',async (req,res)=>{
+    try {
+        const member = await Member.findById(req.params.id)
+        res.render('members/edit',{member : member})
     } catch {
         res.redirect('/members')
     }
@@ -56,6 +85,26 @@ router.put('/:id',async (req,res)=>{
     }
 })
 
+router.delete('/:id',async (req,res)=>{
+    let member
+    try {
+        member = await Member.findById(req.params.id)
+
+        await member.remove()
+        res.redirect('/members')
+    } catch(e) {
+        console.log("Error of DELETE ////|||||\\\\",e);
+        if(member){
+            res.render('members/edit',{
+                member,
+                errorMessage :"Could not remove book"
+            })
+        }else{
+            console.log("------------REDIRECTED------")
+            res.redirect('/')
+        }
+    }
+})
 
 
 
