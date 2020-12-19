@@ -66,9 +66,6 @@
                 <label for="createdOn" class="form-label">Created On</label>
                 <input type="date" name="createdOn" class="form-control"
                     value="<%= defect.createdOn == null ? '' : defect.createdOn.toISOString().split('T')[0] %>" disabled>
-              <div class="invalid-feedback">
-                Please enter the person to whon the defect should be assigned to.
-              </div>
             </div>
 
             <div class="col-sm-6">
@@ -88,9 +85,6 @@
             <div class="col-sm-6">
               <label for="points" class="form-label">Points<span class="text-muted">(Optional)</span></label>
               <input disabled type="number" class="form-control" id="address"  name="points" value="<%= defect.points %>" min="1" max="8">
-              <div class="invalid-feedback">
-                Please enter your position.
-              </div>
             </div>
             <div class="col-sm-6">
               <label for="environment" class="form-label">Environment</label>
@@ -104,23 +98,15 @@
                             <% } %>   
                     <% }) %> 
                 </select>
-              <div class="invalid-feedback">
-                Please enter your environment.
-              </div>
             </div>
             <div class="col-sm-6">
                 <label for="product" class="form-label">Product</label>
                 <input disabled type="text" class="form-control" name="product" value="<%= defect.product %>">
-                <div class="invalid-feedback">
-                  Please enter your product.
-                </div>
             </div>
             
             <div class="col-12">
                 <label for="shortDescription" class="form-label">Short Description </label>
                 <input disabled type="text" class="form-control"  name="shortDescription" value="<%= defect.shortDescription %>">
-                <div class="invalid-feedback">
-                  Please enter a valid short description.
             </div>
             
             <div class="col-12">
