@@ -1,1 +1,5 @@
-<h2>Welcome User</h2>
+<% if(currentUser) {%> 
+<h2>Welcome <%= currentUser.name %></h2>
+<% } else{%> 
+<h2>Welcom User</h2>
+<% } %> 
