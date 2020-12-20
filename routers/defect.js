@@ -3,11 +3,13 @@ const express = require('express')
 const router = express.Router()
 const Defect = require('../models/defect')
 const Member = require('../models/member')
+const user = require('./user')
+
 const bodyParser = require('body-parser')
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-router.get('/',async (req,res)=>{
+router.get('/',user.isAuthenticatedUser,async (req,res)=>{
     let query = Defect.find({}).populate('member')
     if(req.query.number){
         query = query.regex('number',req.query.number)
@@ -25,7 +27,7 @@ router.get('/',async (req,res)=>{
     
 })
 
-router.get('/new',async(req,res)=>{
+router.get('/new',user.isAuthenticatedUser,async(req,res)=>{
     try {
         const defect = new Defect()
         const members = await Member.find({})
