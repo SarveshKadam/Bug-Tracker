@@ -7,6 +7,9 @@
     "start": "node app.js",
     "devStart": "nodemon app.js"
   },
+  "engines": {
+    "node": ">=16.20.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SarveshKadam/Bug-Tracker.git"
